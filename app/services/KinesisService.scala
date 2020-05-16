@@ -7,17 +7,21 @@ import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.kinesis.{AmazonKinesis, AmazonKinesisClientBuilder}
 import javax.inject.{Inject, Singleton}
+import play.api.Configuration
 
 import scala.concurrent.{ExecutionContext, Future, blocking}
 import scala.util.control.NonFatal
 
 @Singleton
-class KinesisService @Inject()(implicit as: ActorSystem, ec: ExecutionContext) {
+class KinesisService @Inject()(config: Configuration)
+                              (implicit as: ActorSystem, ec: ExecutionContext) {
 
   System.setProperty("com.amazonaws.sdk.disableCbor", "true")
 
+  private val serviceEndpoint = config.get[String](path = "kinesis.service.endpoint")
+
   private val localEndpointConfig: EndpointConfiguration =
-    new EndpointConfiguration("http://localhost:4568", Regions.US_EAST_1.getName)
+    new EndpointConfiguration(serviceEndpoint, Regions.US_EAST_1.getName)
 
   private val client: AmazonKinesis =
     AmazonKinesisClientBuilder.standard().withEndpointConfiguration(localEndpointConfig).build()

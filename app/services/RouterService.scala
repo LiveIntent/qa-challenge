@@ -17,14 +17,6 @@ class RouterService @Inject()(kinesisService: KinesisService)(implicit ec: Execu
       .map(_ => randomUuid)
   }
 
-/*
-  return
-    insertHandler(company, body)
-      .then(createdStatus => {
-        return insertNotification(company, status)
-      })
-      .then(status => results.created(res, status.dataValues.id));
-*/
   private def streamName(seed: Long): String =
     if (seed % 2 == 0) RouterService.StreamEvenName else RouterService.StreamOddName
 
