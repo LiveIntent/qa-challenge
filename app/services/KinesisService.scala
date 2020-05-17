@@ -8,9 +8,9 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.services.kinesis.{AmazonKinesis, AmazonKinesisClientBuilder}
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
+import utils.Retries
 
 import scala.concurrent.{ExecutionContext, Future, blocking}
-import scala.util.control.NonFatal
 
 @Singleton
 class KinesisService @Inject()(config: Configuration)
@@ -38,11 +38,11 @@ class KinesisService @Inject()(config: Configuration)
 
 object KinesisService {
 
-  val shardCount = 1
+  private val shardCount = 1
 
   def createStreamsUsing(client: AmazonKinesis): Unit =
-    try {
+    Retries.retry(3) {
       client.createStream(RouterService.StreamEvenName, shardCount)
       client.createStream(RouterService.StreamOddName, shardCount)
-    } catch { case NonFatal(_) => }
+    }
 }

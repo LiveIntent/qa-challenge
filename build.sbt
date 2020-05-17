@@ -25,7 +25,8 @@ lazy val root = (project in file("."))
       case cmd =>
         Seq(cmd)
     },
-    dockerEntrypoint := Seq("/sbin/tini", "--")
+    dockerEntrypoint := Seq("/sbin/tini", "--"),
+    dockerUsername := Some("aparra")
   )
 
 
