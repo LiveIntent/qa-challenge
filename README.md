@@ -11,7 +11,7 @@ router system. This scenario is an extremely simplified version of some of the c
 engineering teams face at LiveIntent.
 
 The service that you are going to test exposes a HTTP - GET - endpoint on `http://localhost:9000/route/:seed`.
-It routes routes requests to two different [kinesis stream][kinesis] according the simple rules:
+It routes requests to two different [kinesis stream][kinesis] according the simple rules:
 * If the *seed* received in the request is odd then it ends up to *li-stream-odd*
 * If the *seed* received in the request is even then it ends up to *li-stream-even*
 
@@ -41,7 +41,7 @@ In that case, with seed 1 (odd number), a message is sent to *li-odd-stream* str
 {"uuid": "325439c2-4b4e-45f1-98ee-75bc9e14d877", "seed": 1}
 ```
 
-If seed is even, a message with same format is send to *li-even-stream* stream. 
+If seed is even, a message with same format is sent to *li-even-stream* stream.
 
 We would like to check if messages are routing to respective streams correctly. If the seed is not a number
 the services returns a bad request.
