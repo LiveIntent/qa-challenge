@@ -26,9 +26,8 @@ lazy val root = (project in file("."))
         Seq(cmd)
     },
     dockerEntrypoint := Seq("/sbin/tini", "--"),
-    dockerUsername := Some("aparra")
+    dockerUsername := Some("liveintentberlin")
   )
-
 
 scalaVersion := "2.13.2"
 val awsVersion = "1.11.754"

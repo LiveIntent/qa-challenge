@@ -10,11 +10,11 @@ services:
       - SERVICES=kinesis:4568
 
   router:
-    image: aparra/qa-challenge:0.0.1
+    image: liveintentberlin/qa-challenge:0.0.1
     depends_on:
       - localstack
     entrypoint: "/bin/bash -c"
-    command: "'sleep 10; bin/qa-challenge'"
+    command: "'sleep 10; rm -f /opt/docker/RUNNING_PID && bin/qa-challenge'"
     ports:
       - 9000:9000
     environment:
