@@ -42,22 +42,22 @@ Content-Type: text/plain; charset=UTF-8
 Content-Length: 0
 ```
 
-In that case, with `seed` being 1(an odd number), a message is sent to *li-odd-stream* stream.
+In that case, with `seed` being 1(an odd number), a message is sent to `li-stream-odd` stream.
 
 ```json
 {"uuid": "325439c2-4b4e-45f1-98ee-75bc9e14d877", "seed": 1}
 ```
 
-If `seed` is even, e.g. 2,4,6,8 etc, a message with same format is sent to *li-even-stream* stream.
+If `seed` is even, e.g. 2,4,6,8 etc, a message with same format is sent to `li-stream-even` stream.
 
 We would like to check if messages are routing to respective streams correctly. If the seed is not a number
 the services returns a bad request.
 
-In order to do that, you will need to read messages from both Kinesis Streams(`li-even-stream` and `li-odd-stream`), and verify that the routing works correctly by asserting that the correct request produced a record in the one stream, and did not produce a record in the other.
+In order to do that, you will need to read messages from both Kinesis Streams(`li-stream-even` and `li-stream-odd`), and verify that the routing works correctly by asserting that the correct request produced a record in the one stream, and did not produce a record in the other.
 
 To solve the challenge, you will need to quickly research how to read records from a Kinesis Stream, if you haven't used it already.
 
-We recommend that you use standard AWS SDK for any programming language you choose.
+We recommend that you use standard AWS SDK for any programming language you choose, e.g [how to read kinesis records with Java](https://docs.aws.amazon.com/streams/latest/dev/developing-consumers-with-sdk.html).
 
 ## Running the Route Service Locally
 
