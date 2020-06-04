@@ -4,6 +4,13 @@ The goal of this coding challenge is to have you produce automated tests that sh
 terms how you think about QA software engineering in your professional life. We want you to use the 
 languages, tools, and setup with which you feel most comfortable.
 
+**We'll be looking at various aspects of the solution:**
+* code readability
+* code structure
+* maintainability
+* edge cases coverage
+* configurable scenarios, e.g. we'd like to test this service on an actual environment using real AWS Kinesis.
+
 ## Functional requirements
 
 For this challenge, we ask you to write a test suite that covers the routing service for a fictional 
@@ -11,14 +18,14 @@ router system. This scenario is an extremely simplified version of some of the c
 engineering teams face at LiveIntent.
 
 The service that you are going to test exposes a HTTP - GET - endpoint on `http://localhost:9000/route/:seed`.
-It routes requests to two different [kinesis stream][kinesis] according the simple rules:
-* If the *seed* received in the request is odd then it ends up to *li-stream-odd*
-* If the *seed* received in the request is even then it ends up to *li-stream-even*
+It routes requests to two different [kinesis stream][kinesis] according to simple rules:
+* If the `seed` received in the request is odd then it ends up to `li-stream-odd`
+* If the `seed` received in the request is even then it ends up to `li-stream-even`
 
 The routing service returns 200 when a valid number is received in the seed param and a message was sent
 to kinesis stream. The response body is empty and a custom header `X-Transaction-Id` was added to Response Header.
 
-Request / Response sample:
+**Request / Response sample:**
 
 ```shell script
 curl --location -D - --request GET 'http://localhost:9000/route/1'
@@ -35,13 +42,13 @@ Content-Type: text/plain; charset=UTF-8
 Content-Length: 0
 ```
 
-In that case, with seed 1 (odd number), a message is sent to *li-odd-stream* stream.
+In that case, with `seed` being 1(an odd number), a message is sent to *li-odd-stream* stream.
 
 ```json
 {"uuid": "325439c2-4b4e-45f1-98ee-75bc9e14d877", "seed": 1}
 ```
 
-If seed is even, a message with same format is sent to *li-even-stream* stream.
+If `seed` is even, e.g. 2,4,6,8 etc, a message with same format is sent to *li-even-stream* stream.
 
 We would like to check if messages are routing to respective streams correctly. If the seed is not a number
 the services returns a bad request.
