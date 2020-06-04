@@ -19,8 +19,8 @@ engineering teams face at LiveIntent.
 
 The service that you are going to test exposes a HTTP - GET - endpoint on `http://localhost:9000/route/:seed`.
 It routes requests to two different [kinesis stream][kinesis] according to simple rules:
-* If the `seed` received in the request is odd then it ends up to `li-stream-odd`
-* If the `seed` received in the request is even then it ends up to `li-stream-even`
+* If the `seed` received in the request is odd then it ends up in the `li-stream-odd` Kinesis stream
+* If the `seed` received in the request is even then it ends up in the `li-stream-even` Kinesis stream
 
 The routing service returns 200 when a valid number is received in the seed param and a message was sent
 to kinesis stream. The response body is empty and a custom header `X-Transaction-Id` was added to Response Header.
@@ -52,6 +52,12 @@ If `seed` is even, e.g. 2,4,6,8 etc, a message with same format is sent to *li-e
 
 We would like to check if messages are routing to respective streams correctly. If the seed is not a number
 the services returns a bad request.
+
+In order to do that, you will need to read messages from both Kinesis Streams(`li-even-stream` and `li-odd-stream`), and verify that the routing works correctly by asserting that the correct request produced a record in the one stream, and did not produce a record in the other.
+
+To solve the challenge, you will need to quickly research how to read records from a Kinesis Stream, if you haven't used it already.
+
+We recommend that you use standard AWS SDK for any programming language you choose.
 
 ## Running the Route Service Locally
 
